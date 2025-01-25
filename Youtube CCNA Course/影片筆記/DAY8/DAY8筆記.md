@@ -1,4 +1,4 @@
-A類IP地址的第一個octet 是0-127
+A類IP地址的第一個octet 是0-127  
 但是因為0與127是被reserved 所以有些人會說是1-126
 
 Maximum Hosts per Network
@@ -125,4 +125,3 @@ R1(config-if)#description ## to SW3 ##
 
 // 現在可以查看description了
 R1(config-if)#do sh int desc
-> Written with [StackEdit](https://stackedit.io/).
