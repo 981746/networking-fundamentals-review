@@ -55,6 +55,12 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
  9. 退出某一個權限角色
  
 	    Router#exit
+	    
+	也可以直接退回到User EXEC Mode(LAB8提到的)
+
+	    Router#end
+
+
 
 10. 儲存設定檔的三種方法
 
@@ -89,7 +95,7 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
  5. 把router從shutdown狀態啟用
 
 		R1(config-if)#no shutdown
- 6. 查看IP介面的description
+ 6. 查看IP介面的description(我的packet tracer無法用 老師可能用的是別的模擬器？)
 
 		R1#show interfaces description
 
