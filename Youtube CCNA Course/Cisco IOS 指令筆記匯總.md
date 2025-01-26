@@ -67,6 +67,10 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 		Router#write
 		Router#write memory
 		Router#copy running-config startup-config
+        
+11. 取消加密password(但是目前已加密的密碼不會被解密)
+
+        no service password-encryption
 
 #### DAY4 LAB
 
