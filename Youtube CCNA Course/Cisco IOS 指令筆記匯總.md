@@ -37,20 +37,20 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 
  7. 查詢running-config
 
-	    Router# show running-config
+	    Router#show running-config
 	或
 
-	    Router# sh run
+	    Router#sh run
 	或
 	
 	    Router(config)#do sh run// 使用do指令 在global模式下查看running config
 
  8. 查詢startup-config
 
-	    Router# show startup-config
+	    Router#show startup-config
 	或
 	
-	    Router# show start
+	    Router#show start
 
  9. 退出某一個權限角色
  
@@ -67,6 +67,10 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 		Router#write
 		Router#write memory
 		Router#copy running-config startup-config
+        
+11. 取消加密password(但是目前已加密的密碼不會被解密)
+
+        no service password-encryption
 
 #### DAY4 LAB
 
@@ -87,11 +91,11 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 		 
  3. 查詢某個IP介面的狀態
 
-		R1# show interfaces g0/0
+		R1#show interfaces g0/0
  4. 設定router的IP地址
 
-		R1(config-if)# ip address 10.255.255.254 255.0.0.0
-		R1(config-if)# ip add 172.16.255.254 255.255.0.0
+		R1(config-if)#ip address 10.255.255.254 255.0.0.0
+		R1(config-if)#ip add 172.16.255.254 255.255.0.0
  5. 把router從shutdown狀態啟用
 
 		R1(config-if)#no shutdown
@@ -101,7 +105,7 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 
  7. 新增某IP介面的description(必須先切到interface config mode)
 
-	    R1# int g0/0
+	    R1#int g0/0
 	    R1(config-if)#description ## to SW1 ##
 
 > Written with [StackEdit](https://stackedit.io/).
