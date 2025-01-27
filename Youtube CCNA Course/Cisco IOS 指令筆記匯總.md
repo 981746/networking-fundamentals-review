@@ -1,7 +1,13 @@
-Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
+### Cisco IOS 指令筆記匯總：
+源於：
+DAY4筆記(不同的權限與修改密碼)  
+DAY4 LAB(改hostname)  
+DAY6筆記(ARP and Dynamic Mac Address)  
+DAY8筆記(進入interface設定模式、查看IP介面狀況、修改IP)  
+DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)
 
 
-#### DAY4筆記：
+#### DAY4筆記(不同的權限與修改密碼)：
 
 預設自動進入user exec mode
 
@@ -72,13 +78,41 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 
         no service password-encryption
 
-#### DAY4 LAB
+#### DAY4 LAB(改hostname)
 
  1. 改設備的hostname
 
 		Router(config)#hostname R1
 
-#### DAY8筆記：
+#### DAY6筆記(ARP and Dynamic Mac Address)
+
+ 1. 在PC上去ping
+
+	    ping 192.168.1.3
+
+ 2. 在PC上查看arp table
+註：如果是在cisco的設備要進入priviledge exec mode，指令是show arp
+
+	    arp -a
+
+ 3. 查看所有Mac Address
+type欄位會有標明是dynamic or 其他類型
+
+		SW1>show mac address-table
+
+ 4. 清除某一筆Dynamic Mac Address
+
+		clear mac address-table dynamic address MAC地址
+
+ 5. 清除所有Dynamic Mac Address
+
+	    clear mac address-table dynamic
+
+ 6. 以interface，清除Dynamic Mac Address
+
+	    clear mac address-table dynamic interface G0/0
+
+#### DAY8筆記(進入interface設定模式、查看IP介面狀況、修改IP)：
 
  1. 查詢router的「全部」IP介面狀況
 
@@ -108,4 +142,31 @@ Cisco IOS 指令筆記匯總：//源於DAY4筆記、DAY4 LAB、DAY8筆記
 	    R1#int g0/0
 	    R1(config-if)#description ## to SW1 ##
 
+
+#### DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)
+
+ 1. 查看switch的介面狀態
+
+	    show interfaces status
+
+ 2. 設定Speed
+
+	    SW1(config-if)#speed 100
+
+ 3. 設定duplex
+
+	    SW1(config-if)#duplex full
+
+ 4. 設定description，並且會出現在`show interfaces status`的name field
+
+	    SW1(config-if)#description ## to R1 ##
+
+ 5. 一次設定多個介面，先進入interface range config模式，再進行設定。  
+這個例子是一次設定多個介面的description，並且把多個介面shutdown
+
+	    SW1(config)#interface range f0/5 - 12
+		SW1(config-if-range)#description ## not in use ##  
+		SW1(config-if-range)#shutdown
 > Written with [StackEdit](https://stackedit.io/).
+
+
