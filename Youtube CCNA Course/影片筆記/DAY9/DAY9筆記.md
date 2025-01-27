@@ -1,3 +1,22 @@
+#### 有疑問的部分：
+```
+PC 互相連接 Switch
+所以是Switch還是PC的autonegotiation關掉的狀況？
+// 有點看不懂這段的英文敘述
+// 是對方，也就是PC端關掉autonegotiation嗎？因為對方關掉就無法正常溝通，所以switch會自動去sense嗎
+
+Speed
+switch會去自動感知另外一段設備的速度
+如果感知失敗，就會使用支援速度中的最慢的速度
+舉例： 一個介面支援10/100/1000Mbs，此時會使用10Mbs
+
+Duplex
+if 抓到的Speed是10Mbs 或 100Mbs，此時會使用half-duplex
+if 抓到的Speed是1000Mbs或更快的速度，此時會用full-duplex
+```
+
+#### 隨手筆記：
+
 ASR 1000-X Router  
 Catalyst 9200 Switch
 
@@ -80,4 +99,6 @@ Input errors
 Output errors
 
 Autonegotiation
+
+
 
