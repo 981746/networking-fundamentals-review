@@ -212,8 +212,10 @@ R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.133.2
 
 顯示S* 0.0.0.0/0 [1/0] 203.0.113.2
 
+```
 * - candidate default  
 candidate可能有多個
+```
 
 Static Route configuraton  
 R1(config)# ip route ip-address netmask next-hop  
