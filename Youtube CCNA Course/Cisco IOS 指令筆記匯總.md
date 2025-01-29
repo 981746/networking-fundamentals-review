@@ -5,6 +5,7 @@ DAY4 LAB(改hostname)
 DAY6筆記(ARP and Dynamic Mac Address)  
 DAY8筆記(進入interface設定模式、查看IP介面狀況、修改IP)  
 DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)
+DAY11 Part1筆記(查看Router的routing table)
 
 
 #### DAY4筆記(不同的權限與修改密碼)：
@@ -167,6 +168,16 @@ type欄位會有標明是dynamic or 其他類型
 	    SW1(config)#interface range f0/5 - 12
 		SW1(config-if-range)#description ## not in use ##  
 		SW1(config-if-range)#shutdown
+        
+
+    
+#### DAY11 Part1筆記(查看Router的routing table) 
+
+ 1. 查看R1的routing table
+	(在設定好Router各個介面的IP後，當你下達no shutdown指令 ，每個介面都會自動加入兩個路徑到routing table，也就是local與connected路徑)
+
+	    R1# show ip route
+       
 > Written with [StackEdit](https://stackedit.io/).
 
 
