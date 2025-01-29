@@ -1,11 +1,13 @@
-### Cisco IOS 指令筆記匯總：
-源於：
+### Cisco IOS 指令匯總：
+源於：  
 DAY4筆記(不同的權限與修改密碼)  
 DAY4 LAB(改hostname)  
 DAY6筆記(ARP and Dynamic Mac Address)  
 DAY8筆記(進入interface設定模式、查看IP介面狀況、修改IP)  
-DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)
-DAY11 Part1筆記(查看Router的routing table)
+DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)  
+DAY11 Part1筆記(查看Router的routing table)  
+DAY11 Part2筆記(Router設定static routes、default route)
+
 
 
 #### DAY4筆記(不同的權限與修改密碼)：
@@ -177,7 +179,24 @@ type欄位會有標明是dynamic or 其他類型
 	(在設定好Router各個介面的IP後，當你下達no shutdown指令 ，每個介面都會自動加入兩個路徑到routing table，也就是local與connected路徑)
 
 	    R1# show ip route
-       
+
+#### DAY11 Part2筆記(Router設定static routes、default route)
+
+ 1. router設定static routes有三種方法  
+ (設定default route也是一樣用此方法)
+
+	    R1(config)# ip route ip-address netmask next-hop
+	    R1(config)# ip route ip-address netmask exit-interface
+	    R1(config)# ip route ip-address netmask exit-interface next-hop     
+	     
+		例子：
+		R3(config)# ip route 192.168.4.0 255.255.255.0 192.168.13.1
+		R2(config)# ip route 192.168.1.0 255.255.255.0 g0/0
+		R2(config)# ip route 192.168.4.0 255.255.255.0 g0/1 192.168.24.4
+        
+        設定default route：
+        R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.133.2
+
 > Written with [StackEdit](https://stackedit.io/).
 
 
