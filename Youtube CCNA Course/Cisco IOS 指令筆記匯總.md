@@ -6,7 +6,9 @@ DAY6筆記(ARP and Dynamic Mac Address)
 DAY8筆記(進入interface設定模式、查看IP介面狀況、修改IP)  
 DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)  
 DAY11 Part1筆記(查看Router的routing table)  
-DAY11 Part2筆記(Router設定static routes、default route)
+DAY11 Part2筆記(Router設定static routes、default route)  
+DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)  
+DAY12 LAB(查MAC Address、改改MAC Address)
 
 
 
@@ -196,6 +198,29 @@ type欄位會有標明是dynamic or 其他類型
         
         設定default route：
         R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.133.2
+
+#### DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)
+
+ 1. 查running-config目前已設定的ip route的設定值
+
+	    show running-config | include ip route
+
+
+#### DAY12 LAB(查MAC Address、改改MAC Address)
+
+ 1. 查MAC Address指令 In Windows PC
+
+	    ipconfig /all
+
+ 2. 查MAC Address指令 In Cisco Device's interface
+
+	    show interfaces g0/0
+
+ 3. 修改router的MAC Address
+0000.01aa.aaaa為想修改的MAC Address
+此舉動會導致MAC Address與BIA不一致
+
+	    mac-address 0000.01aa.aaaa
 
 > Written with [StackEdit](https://stackedit.io/).
 
