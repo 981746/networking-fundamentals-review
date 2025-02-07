@@ -1,7 +1,7 @@
 DAY 15 LAB static route 設定解答
 
 R1與兩個LAN相連接 且有一point to point connection  
-R2與兩個LAN相連接 寫有一point to point connection
+R2與兩個LAN相連接 且有一point to point connection
 
 
 先在R2設定到達LAN1與LAN2的路徑：  
