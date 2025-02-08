@@ -8,7 +8,8 @@ DAY9筆記(查switch介面狀態、Speed、Duplex、interface range)
 DAY11 Part1筆記(查看Router的routing table)  
 DAY11 Part2筆記(Router設定static routes、default route)  
 DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)  
-DAY12 LAB(查MAC Address、改改MAC Address)
+DAY12 LAB(查MAC Address、改改MAC Address)  
+DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)
 
 
 
@@ -221,6 +222,20 @@ type欄位會有標明是dynamic or 其他類型
 此舉動會導致MAC Address與BIA不一致
 
 	    mac-address 0000.01aa.aaaa
+
+#### DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)
+
+ 1. 一次設定多個介面、使其為access port、並指派給某一vlan
+
+	    SW1(config)#interface range g1/0 - 3
+	    SW1(config)#switchport mode access
+	    SW1(config)#switchport acess vlan 10
+	    SW1(config)#do show vlan brief
+
+ 2. 修改vlan名稱
+
+	    SW1(config)#vlan 10// 好像是新增vlan，並切到vlan 10的意思。已經有新增過就直接切過去
+	    SW1(config-vlan)#name ENGINEERING
 
 > Written with [StackEdit](https://stackedit.io/).
 
