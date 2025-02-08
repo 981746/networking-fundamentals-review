@@ -115,8 +115,8 @@ VLAN    Name
 30      VLAN0030
 ```
 那我們可以去把名稱改掉
-SW1(config)#vlan 10// 這個指令同時也會新增一個vlan，但其實vlan 10已經新增過了
 ```
+SW1(config)#vlan 10// 這個指令同時也會新增一個vlan，但其實vlan 10已經新增過了
 SW1(config-vlan)#name ENGINEERING
 SW1(config-vlan)#vlan 20
 SW1(config-vlan)#name HR
