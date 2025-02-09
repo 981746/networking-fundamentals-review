@@ -181,7 +181,7 @@ SW2(config)#int g0/0
 SW2(config)#switchport trunk encapsulation dot1q  
 SW2(config)#switchport mode trunk  
 SW2(config)#switchport trunk allowed vlan10,30  
-SW2(config)#switchport trunk native vlan 100  
+SW2(config)#switchport trunk native vlan 1001  
 SW2(config)#do sh int trunk
 
 
