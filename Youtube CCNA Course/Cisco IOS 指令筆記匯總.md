@@ -9,7 +9,9 @@ DAY11 Part1筆記(查看Router的routing table)
 DAY11 Part2筆記(Router設定static routes、default route)  
 DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)  
 DAY12 LAB(查MAC Address、改改MAC Address)  
-DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)
+DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)  
+DAY17(在switch上設定trunk port與允許的VLANs、在router上的某一介面的切子介面與區分VLAN相關設定)
+
 
 
 
@@ -237,6 +239,82 @@ type欄位會有標明是dynamic or 其他類型
 	    SW1(config)#vlan 10// 好像是新增vlan，並切到vlan 10的意思。已經有新增過就直接切過去
 	    SW1(config-vlan)#name ENGINEERING
 
-> Written with [StackEdit](https://stackedit.io/).
+
+#### DAY17(在switch上設定trunk port與允許的VLANs、在router上的某一介面的切子介面與區分VLAN相關設定)
+
+ 1. 說明使用哪一種TAG標準// 設備在允許ISP與802.1Q的狀態下，要先說明用哪一個
+
+	    SW1(config-if)#switchport trunk encapsulation dot1q
+
+ 2. 把port轉成trunk port
+
+	    SW1(config-if)#switchprot mode trunk
+
+ 3. 直接說明allowed的vlan有哪些
+
+	    SW1(config)#switchport trunk allowed vlan 10,30
+
+ 4. 以下為allowed vlan的相關選項：
+
+		ADD VLAN選項
+		SW1(config)#switchport trunk allowed vlan add 20
+
+		移除VLAN選項
+		SW1(config-if)#switchport trunk allowed vlan remove 20
+
+		ALL選項會回到預設值(允許所有VLAN)
+		SW1(config-if)#switchport trunk allowed vlan all
+
+		Except選項(指定的VLAN外，全部加入)
+		SW1(config-if)#switchprot trunk allowed valn except 1-5,10
+
+		NONE選項(此trunk port不允許任何VLAN)
+		SW1(config-if)#switchport trunk allowed vlan none
+
+ 5. 把Native VLAN改掉(預設為1)，改成1001
+
+		SW1(config-if)#switchport trunk native vlan 1001
+		SW1(config-if)#do show interfaces trunk
+
+ 6. 顯示trunk port狀態
+
+		SW1#show interfaces trunk
+
+ 7. 在switch上，設定trunk port與允許的VLAN相關指令全部串在一起
+
+		SW2(config)#int g0/0
+		SW2(config)#switchport trunk encapsulation dot1q
+		SW2(config)#switchport mode trunk
+		SW2(config)#switchport trunk allowed vlan10,30
+		SW2(config)#switchport trunk native vlan 1001
+		SW2(config)#do sh int trunk
+
+ 8. router的某一介面在邏輯上切分成三條路(允許三個VLAN通過)
+
+	    R1(config)#int g0/0
+	    R1(config-if)#no shutdown
+	    
+	    子介面一
+	    R1(config-if)#interface g0/0.10
+	    R1(config-if)#encapsulation dot1q 10// 從這個介面進來 要打標籤10
+	    R1(config-if)#ip address 192.168.1.62 255.255.255.192
+	    // 邏輯上會切三條線 router會對應有三個介面 所以router這邊也要去設定子介面的IP
+	    
+	    子介面二
+	    R1(config-if)#interface g0/0.20
+	    R1(config-if)#encapsulation dot1q 20
+	    R1(config-if)#ip address 192.168.1.126 255.255.255.192
+	    
+	    子介面三
+	    R1(config-if)#interface g0/0.30
+	    R1(config-if)#encapsulation dot1q 30
+	    R1(config-if)#ip address 192.168.1.190 255.255.255.192
+	    
+	    R1#sh ip int br
+	    會看到子介面也出現了，但實體介面本身的IP-Address為unassigned
+	    
+	    R1#sh ip route
+	    查routing table
+	    可以看到子介面的IP作為local與conneted route在其中
 
 
