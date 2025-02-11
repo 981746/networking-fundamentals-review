@@ -1,4 +1,5 @@
 DAY17 LAB 解答
+// 解答完LAB後，還幫我們preview了NetSim，NetSim裡有很多LAB可以做
 
 網路圖用文字說明一下：  
 SW1 == VLAN10 PC1 PC2  
