@@ -9,8 +9,8 @@ DAY11 Part1筆記(查看Router的routing table)
 DAY11 Part2筆記(Router設定static routes、default route)  
 DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)  
 DAY12 LAB(查MAC Address、改改MAC Address)  
-DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)  
-DAY17(在switch上設定trunk port與允許的VLANs、在router上的某一介面切子介面與區分VLAN相關設定)
+DAY16筆記(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)  
+DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面切子介面與區分VLAN相關設定)
 
 
 
@@ -225,7 +225,7 @@ type欄位會有標明是dynamic or 其他類型
 
 	    mac-address 0000.01aa.aaaa
 
-#### DAY16(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)
+#### DAY16筆記(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)
 
  1. 一次設定多個介面、使其為access port、並指派給某一vlan
 
@@ -240,7 +240,7 @@ type欄位會有標明是dynamic or 其他類型
 	    SW1(config-vlan)#name ENGINEERING
 
 
-#### DAY17(在switch上設定trunk port與允許的VLANs、在router上的某一介面的切子介面與區分VLAN相關設定)
+#### DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面的切子介面與區分VLAN相關設定)
 
  1. 說明使用哪一種TAG標準// 設備在允許ISP與802.1Q的狀態下，要先說明用哪一個
 
