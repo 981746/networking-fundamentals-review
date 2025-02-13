@@ -10,7 +10,11 @@ DAY11 Part2筆記(Router設定static routes、default route)
 DAY11 Part2 LAB(查running-config目前已設定的ip route的設定值)  
 DAY12 LAB(查MAC Address、改改MAC Address)  
 DAY16筆記(一次設定多個介面、使其為access port、並指派給某一vlan、修改vlan名稱)  
-DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面切子介面與區分VLAN相關設定)
+DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面切子介面與區分VLAN相關設定，叫做Router On A Stick方法)  
+DAY18筆記(設定native vlan的兩種方法、以SVI來處理inter-vlan routing)  
+// DAY18筆記有一部份內容我搞丟了，所以很多指令是重新看影片整理的
+
+
 
 
 
@@ -240,7 +244,7 @@ type欄位會有標明是dynamic or 其他類型
 	    SW1(config-vlan)#name ENGINEERING
 
 
-#### DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面的切子介面與區分VLAN相關設定)
+#### DAY17筆記(在switch上設定trunk port與允許的VLANs、在router上的某一介面切子介面與區分VLAN相關設定，叫做Router On A Stick方法)
 
  1. 說明使用哪一種TAG標準// 設備在允許ISP與802.1Q的狀態下，要先說明用哪一個
 
@@ -289,7 +293,7 @@ type欄位會有標明是dynamic or 其他類型
 		SW2(config)#switchport trunk native vlan 1001
 		SW2(config)#do sh int trunk
 
- 8. router的某一介面在邏輯上切分成三條路(允許三個VLAN通過)
+ 8. router的某一介面在邏輯上切分成三條路(允許三個VLAN通過)(Router On A Stick方法)
 
 	    R1(config)#int g0/0
 	    R1(config-if)#no shutdown
@@ -317,4 +321,94 @@ type欄位會有標明是dynamic or 其他類型
 	    查routing table
 	    可以看到子介面的IP作為local與conneted route在其中
 
+
+#### DAY18筆記(設定native vlan的兩種方法、以SVI來處理inter-vlan routing)
+
+ 1. 在router設定native vlan有兩個方法：
+
+	(0)預處理步驟：
+	找到有設定trunk port的介面，設定native vlan為vlan10
+	(本來的trunk port介面的native vlan為unused port 1001)
+	
+		switchport trunk native vlan 10
+
+	(1)直接把子介面設為native
+	指令格式：encapsulation dot1q [vlan-id] native
+
+		R1(config)#int g0/0.10
+		R1(config-subif)#encapsulation dot1q 10 native
+
+	或
+	(2)把子介面刪掉，把原先子介面的IP設定在實體介面上
+	
+		R1(config)#no interface g0/0.10
+		R1(config)#interface g0/0
+		R1(config)#ip address 192.168.1.62 255.255.255.192
+
+ 2. 以SVI來處理inter-vlan routing
+
+	> 	(1)router拿掉子介面、介面回到預設值(因為上一集使用SW(trunk port) ==  Router (ROAS方法切子介面)  
+	> 	(2)設定R1與SW2(layer3)的point to point connection，R1部分  
+	> 	(3)設定R1與SW2(layer3)的point to point connection，SW2部分：  
+	> 	先把switch介面回到預設值(因為上一集為trunk port)、再打開routing功能、轉換成routed port、設定IP  
+	> 	(4)在layer3 switch，設定default route指向R1  
+	> 	(5)SVI設定 - 在layer 3
+	> switch直接新增各個虛擬的VLAN介面與設定IP
+
+	(1)router拿掉子介面、介面回到預設值
+
+	SW2(layer3) == R1
+	架構圖中把SW2改成layer 3 switch，所以SW2與R1的連接現在變成point to point connection
+	因為本來SW2(layer2) == R1
+	R1這邊的介面有設定router on a stick，也就是有去切子介面
+	所以現在要把子介面都拿掉，且把g0/0介面設定為預設值
+
+		R1(config)#no interface g0/0.10
+		R1(config)#no interface g0/0.20
+		R1(config)#no interface g0/0.30
+		R1(config)#default interface g0/0
+		R1(config)#do sh ip int br
+
+	(2)設定R1與SW2(layer3)的point to point connection，R1部分
+	R1這邊介面的IP要設定為point to point connection網路的last usable address
+
+		R1(config)#interface g0/0
+		R1(config)#ip address 192.168.1.194 255.255.255.252
+		R1(config)#do sh ip int br
+
+	(3)設定R1與SW2(layer3)的point to point connection，SW2部分
+
+	SW2的g0/1在上一課被設定為trunk與router對接
+	現在要先回到初始設定
+	以ip routing指令開啟switch的routing功能
+	以no switchport指令讓port從layer 2 switchport變成layer3 routed port
+	最後才是設定switch這邊的point to point connection的IP
+
+		SW2(config)#default interface g0/1
+		SW2(config)#ip routing
+		SW2(config)#interface g0/1
+		SW2(config)#no switchport
+		SW2(config)#ip address 192.168.1.193 255.255.255.252
+		SW2(config)#show interfaces status// 介面的VLAN欄位會變成routed
+
+	(4)在layer3 switch，設定default route指向R1
+	
+		SW2(config)#ip route 0.0.0.0 0.0.0.0 192.168.1.194
+		SW2(config)#do sh ip route
+
+	(5)SVI設定 - 在layer 3 switch直接新增各個虛擬的VLAN介面與設定IP  
+	以router處理inter-vlan routing 會在router切子介面，並且設定IP  
+	但現在改成在layer 3 switch直接新增虛擬的VLAN介面與設定IP
+
+		SW2(config)#interface vlan10
+		SW2(config-if)#ip address 192.168.1.62 255.255.255.192
+		SW2(config-if)#no shutdown
+
+		SW2(config)#interface vlan20
+		SW2(config-if)#ip address 192.168.1.126 255.255.255.192
+		SW2(config-if)#no shutdown
+
+		SW2(config)#interface vlan30
+		SW2(config-if)#ip address 192.168.1.190 255.255.255.192
+		SW2(config-if)#no shutdown
 
