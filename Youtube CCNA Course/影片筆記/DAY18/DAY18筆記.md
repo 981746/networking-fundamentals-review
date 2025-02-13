@@ -67,7 +67,7 @@ R1→SW2的狀況
 
 下指令：  
 R1(config)#no interface g0/0.10// 之前有去切子介面，現在把子介面還回去  
-R1(config)#interface g0/1  
+R1(config)#interface g0/0  
 R1(config)#ip address 192.168.1.62 255.255.255.192
 
 現在我們可以看一下running config的狀態  
